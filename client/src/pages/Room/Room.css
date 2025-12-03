@@ -1,0 +1,162 @@
+.room-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: radial-gradient(circle at top, #111827, #020617);
+  color: #f9fafb;
+}
+
+.room-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 20px;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+  backdrop-filter: blur(10px);
+  background: linear-gradient(to right, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.7));
+}
+
+.room-header-left h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.room-subtext {
+  margin: 2px 0 0;
+  font-size: 13px;
+  color: #cbd5f5;
+}
+
+.room-subtext span {
+  font-weight: 600;
+}
+
+.room-header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.room-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: rgba(15, 118, 110, 0.1);
+  color: #a5f3fc;
+  font-size: 13px;
+}
+
+.room-pill .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #22c55e;
+}
+
+.btn.leave {
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid #f97373;
+  background: rgba(127, 29, 29, 0.3);
+  color: #fecaca;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.btn.leave:hover {
+  background: rgba(127, 29, 29, 0.6);
+}
+
+.room-main {
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 2.5fr) minmax(260px, 0.9fr);
+  gap: 0;
+  min-height: 0;
+}
+
+.room-map-section {
+  position: relative;
+}
+
+.room-map {
+  width: 100%;
+  height: calc(100vh - 64px);
+}
+
+.room-sidebar {
+  padding: 14px 18px;
+  border-left: 1px solid rgba(148, 163, 184, 0.2);
+  background: linear-gradient(to bottom, #020617, #030712);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.room-sidebar h3 {
+  margin: 0 0 6px;
+  font-size: 16px;
+}
+
+.room-sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  overflow-y: auto;
+  max-height: 50vh;
+}
+
+.room-sidebar li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px dashed rgba(55, 65, 81, 0.6);
+  font-size: 14px;
+}
+
+.rider-name {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.you-pill {
+  padding: 2px 6px;
+  border-radius: 999px;
+  font-size: 11px;
+  background: rgba(59, 130, 246, 0.15);
+  color: #bfdbfe;
+}
+
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+}
+
+.status-dot.online {
+  background: #22c55e;
+}
+
+.status-dot.idle {
+  background: #facc15;
+}
+
+.small-note {
+  margin-top: auto;
+  font-size: 11px;
+  color: #9ca3af;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .room-main {
+    grid-template-columns: 1fr;
+  }
+  .room-map {
+    height: 50vh;
+  }
+}

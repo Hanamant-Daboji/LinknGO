@@ -1,0 +1,100 @@
+.home-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at top, #1a2b6b, #050816);
+  padding: 16px;
+}
+
+.home-card {
+  width: 100%;
+  max-width: 420px;
+  background: rgba(10, 10, 25, 0.95);
+  border-radius: 18px;
+  padding: 24px 28px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.home-title {
+  margin: 0 0 8px;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.home-subtitle {
+  margin: 0 0 24px;
+  font-size: 14px;
+  color: #c4c7f5;
+}
+
+.home-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.home-field label {
+  font-size: 13px;
+  color: #ddd;
+}
+
+.home-field input {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #333;
+  outline: none;
+  background: #0b1020;
+  color: #f9f9f9;
+  font-size: 14px;
+}
+
+.home-field input:focus {
+  border-color: #6366f1;
+}
+
+.home-buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.home-divider {
+  margin: 16px 0 10px;
+  text-align: center;
+  font-size: 12px;
+  color: #aaa;
+}
+
+.home-divider span {
+  position: relative;
+}
+
+.btn {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.btn.primary {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: white;
+  font-weight: 600;
+}
+
+.btn.secondary {
+  background: #111827;
+  color: #e5e7eb;
+  border: 1px solid #374151;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 22px rgba(0, 0, 0, 0.4);
+}

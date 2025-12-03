@@ -1,0 +1,16 @@
+.dash-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #020617;
+  color: #e5e7eb;
+}
+
+.dash-card {
+  max-width: 600px;
+  padding: 24px 28px;
+  border-radius: 16px;
+  background: #0b1120;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+}
