@@ -14,6 +14,29 @@ L.Icon.Default.mergeOptions({
   iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
   shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
 });
+// 🎨 Generate different colored icons for each user
+function getUserIcon(index) {
+  const colors = [
+    "red", "blue", "green", "purple", "orange",
+    "brown", "yellow", "pink", "teal", "black"
+  ];
+
+  const color = colors[index % colors.length];
+
+  return L.divIcon({
+    className: "custom-marker",
+    html: `
+      <div style="
+        width: 18px;
+        height: 18px;
+        background: ${color};
+        border-radius: 50%;
+        border: 2px solid white;
+      "></div>
+    `,
+    iconSize: [18, 18],
+  });
+}
 
 export default function Room() {
   const { roomId } = useParams();
@@ -160,19 +183,46 @@ export default function Room() {
               attribution='&copy; OpenStreetMap contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            {userList.map(([id, data]) => {
+            {/* Render markers of all users on map */}
+            {userList.map(([id, data], index) => {
+              // If user has no location yet → skip
               if (data.lat == null || data.lng == null) return null;
+
               const isMe = id === mySocketId;
+              const icon = getUserIcon(index); // each user gets unique marker color
+
               return (
-                <Marker key={id} position={[data.lat, data.lng]}>
-                  <Popup>
+                <div key={id}>
+                  {/* 🟢 Marker icon */}
+                  <Marker position={[data.lat, data.lng]} icon={icon}>
+                    <Popup>
+                      <strong>{data.userName}</strong> {isMe ? "(You)" : ""}
+                      <br />
+                      Lat: {data.lat.toFixed(4)}, Lng: {data.lng.toFixed(4)}
+                    </Popup>
+                  </Marker>
+
+                  {/* 🟢 Permanent username label above marker */}
+                  <div
+                    className="user-label"
+                    style={{
+                      position: "absolute",
+                      transform: "translate(-50%, -35px)", // position above marker
+                      backgroundColor: "white",
+                      padding: "2px 6px",
+                      borderRadius: "4px",
+                      fontSize: "12px",
+                      fontWeight: "600",
+                      pointerEvents: "none", // ignore mouse hover
+                      zIndex: 1000
+                    }}
+                  >
                     {data.userName} {isMe ? "(You)" : ""}
-                    <br />
-                    Lat: {data.lat.toFixed(4)}, Lng: {data.lng.toFixed(4)}
-                  </Popup>
-                </Marker>
+                  </div>
+                </div>
               );
             })}
+
           </MapContainer>
         </section>
 

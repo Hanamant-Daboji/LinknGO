@@ -35,11 +35,12 @@ const io = new Server(server, {
 io.on("connection", (socket) => {
   console.log("New client connected:", socket.id);
 
-  // When user joins a room
+  // -------- JOIN ROOM --------
   socket.on("join-room", ({ roomId, userName }) => {
     console.log(`${userName} joined room ${roomId}`);
 
     socket.join(roomId);
+    socket.userName = userName;
 
     if (!rooms[roomId]) {
       rooms[roomId] = { users: {} };
@@ -51,17 +52,17 @@ io.on("connection", (socket) => {
       lng: null,
     };
 
-    // Send current users list to this client
-    io.to(socket.id).emit("room-users", rooms[roomId].users);
+    // Send full users list to everyone
+    io.to(roomId).emit("room-users", rooms[roomId].users);
 
-    // Notify others
+    // Notify others individually
     socket.to(roomId).emit("user-joined", {
       socketId: socket.id,
       userName,
     });
   });
 
-  // Location update from a user
+  // -------- LOCATION UPDATE --------
   socket.on("location-update", ({ roomId, lat, lng }) => {
     const room = rooms[roomId];
     if (!room || !room.users[socket.id]) return;
@@ -69,7 +70,6 @@ io.on("connection", (socket) => {
     room.users[socket.id].lat = lat;
     room.users[socket.id].lng = lng;
 
-    // Broadcast to everyone in the room
     io.to(roomId).emit("location-update", {
       socketId: socket.id,
       userName: room.users[socket.id].userName,
@@ -78,23 +78,23 @@ io.on("connection", (socket) => {
     });
   });
 
-  // Handle manual leave (optional)
+  // -------- LEAVE ROOM --------
   socket.on("leave-room", ({ roomId }) => {
-    if (rooms[roomId]) {
-      delete rooms[roomId].users[socket.id];
-      socket.leave(roomId);
-      socket.to(roomId).emit("user-left", { socketId: socket.id });
+    if (!rooms[roomId]) return;
 
-      if (Object.keys(rooms[roomId].users).length === 0) {
-        delete rooms[roomId];
-      }
+    delete rooms[roomId].users[socket.id];
+    socket.leave(roomId);
+    socket.to(roomId).emit("user-left", { socketId: socket.id });
+
+    if (Object.keys(rooms[roomId].users).length === 0) {
+      delete rooms[roomId];
     }
   });
 
+  // -------- DISCONNECT --------
   socket.on("disconnect", () => {
     console.log("Client disconnected:", socket.id);
 
-    // Clean up from all rooms
     for (const roomId of Object.keys(rooms)) {
       if (rooms[roomId].users[socket.id]) {
         socket.to(roomId).emit("user-left", { socketId: socket.id });
@@ -107,6 +107,7 @@ io.on("connection", (socket) => {
     }
   });
 });
+
 
 server.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);

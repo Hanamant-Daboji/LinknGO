@@ -160,3 +160,7 @@
     height: 50vh;
   }
 }
+/* Keep names above marker visually */
+.user-label {
+  z-index: 2000;
+}
