@@ -2,36 +2,19 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Home.css";
 
-function generateRoomId() {
-  // Simple random room id
-  return Math.random().toString(36).substring(2, 8).toUpperCase();
-}
-
 export default function Home() {
   const navigate = useNavigate();
   const [userName, setUserName] = useState("");
   const [roomIdInput, setRoomIdInput] = useState("");
 
-  const handleCreateJourney = () => {
-    if (!userName.trim()) {
-      alert("Please enter your name");
-      return;
-    }
-    const roomId = generateRoomId();
-    navigate(`/room/${roomId}`, {
-      state: { userName, isCreator: true },
-    });
+  const handleStartJourney = () => {
+    if (!userName.trim()) return alert("Enter your name first");
+    navigate("/create", { state: { userName } });
   };
 
-  const handleJoinJourney = () => {
-    if (!userName.trim()) {
-      alert("Please enter your name");
-      return;
-    }
-    if (!roomIdInput.trim()) {
-      alert("Enter a room ID to join");
-      return;
-    }
+  const handleJoin = () => {
+    if (!userName.trim()) return alert("Enter your name first");
+    if (!roomIdInput.trim()) return alert("Enter Room ID");
     navigate(`/room/${roomIdInput.trim().toUpperCase()}`, {
       state: { userName, isCreator: false },
     });
@@ -42,9 +25,10 @@ export default function Home() {
       <div className="home-card">
         <h1 className="home-title">LinknGo 🚗</h1>
         <p className="home-subtitle">
-          Create a journey, share a code, and see your friends move on the same map in real-time.
+          Live journey sharing with real-time location on the same map.
         </p>
 
+        {/* User name */}
         <div className="home-field">
           <label>Your name</label>
           <input
@@ -55,16 +39,16 @@ export default function Home() {
           />
         </div>
 
-        <div className="home-buttons">
-          <button onClick={handleCreateJourney} className="btn primary">
-            Create Journey
-          </button>
-        </div>
+        {/* Buttons */}
+        <button onClick={handleStartJourney} className="btn primary">
+          Start New Journey
+        </button>
 
         <div className="home-divider">
           <span>or join existing</span>
         </div>
 
+        {/* Join section */}
         <div className="home-field">
           <label>Room ID</label>
           <input
@@ -75,7 +59,7 @@ export default function Home() {
           />
         </div>
 
-        <button onClick={handleJoinJourney} className="btn secondary">
+        <button onClick={handleJoin} className="btn secondary">
           Join Journey
         </button>
       </div>

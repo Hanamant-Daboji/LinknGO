@@ -5,6 +5,9 @@ import L from "leaflet";
 import { socket } from "../../socket";
 import "./Room.css";
 import "leaflet/dist/leaflet.css";
+import MapboxDirections from "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions";
+import "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css";
+
 
 // Fix default marker icon issue in Leaflet + Vite
 delete L.Icon.Default.prototype._getIconUrl;
@@ -183,6 +186,7 @@ export default function Room() {
               attribution='&copy; OpenStreetMap contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
+            
             {/* Render markers of all users on map */}
             {userList.map(([id, data], index) => {
               // If user has no location yet → skip

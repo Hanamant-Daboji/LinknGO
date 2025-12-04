@@ -1,0 +1,17 @@
+.create-journey-page {
+  padding: 20px;
+}
+.search-box {
+  margin-bottom: 12px;
+}
+.select-map {
+  width: 100%;
+  height: 350px;
+  margin-top: 10px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+button.create {
+  margin-top: 20px;
+  width: 100%;
+}
